@@ -1,8 +1,14 @@
 <template>
     <div id="app">
         <div class="office">
-            <Map />
-            <SideMenu />
+            <Map
+              @closeProfile="closeProfile"
+              @openProfile="openProfile"
+            />
+            <SideMenu
+              :isUserOpenned.sync="isUserOpenned"
+              :person="person"
+            />
         </div>
     </div>
 </template>
@@ -13,9 +19,23 @@ import SideMenu from "./components/SideMenu.vue";
 
 export default {
   name: "App",
+  data: () => ({
+    isUserOpenned: false,
+    person: {},
+  }),
   components: {
     Map,
     SideMenu,
+  },
+  methods: {
+    openProfile(person) {
+      this.isUserOpenned = true;
+      this.person = person;
+    },
+    closeProfile() {
+      // this.isUserOpenned = close;
+      // this.person = null;
+    },
   },
 };
 </script>

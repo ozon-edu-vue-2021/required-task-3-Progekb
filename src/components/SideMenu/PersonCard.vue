@@ -21,6 +21,8 @@
 </template>
 
 <script>
+import { format } from 'date-fns';
+
 export default {
     props: {
         person: {
@@ -30,7 +32,7 @@ export default {
     },
     computed: {
         formatedDate() {
-            return this.person.registered;
+            return format(new Date(this.person.registered), 'dd.MM.yyyy hh:mm');
         },
     },
 };
