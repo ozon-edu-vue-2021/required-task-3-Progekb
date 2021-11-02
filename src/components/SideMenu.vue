@@ -38,32 +38,18 @@
               />
             </Draggable>
           </div>
-          <span
-            v-else
-            class="legend--empty"
-          >
-                        Список пуст
-                    </span>
+          <span v-else class="legend--empty">Список пуст</span>
         </div>
         <div class="legend__chart">
           <div class="formated-date">
-            {{formatedDate}}
+            {{ formatedDate }}
           </div>
           <Doughnut ref="chart" />
         </div>
       </div>
-      <div
-        v-else
-        class="profile"
-      >
-        <div
-          v-if="!person"
-          class="profile__empty"
-        >
-          Место пустое
-        </div>
-
-        <PersonCard v-else :person="person"/>
+      <div v-else class="profile">
+        <div v-if="!person" class="profile__empty">Место пустое</div>
+        <PersonCard v-else :person="person" />
       </div>
     </div>
   </div>
@@ -75,7 +61,7 @@ import PersonCard from "./SideMenu/PersonCard.vue";
 import legend from "@/assets/data/legend.json";
 import Draggable from "vuedraggable";
 import { Doughnut } from "vue-chartjs";
-import { format } from 'date-fns';
+import { format } from "date-fns";
 
 export default {
   props: {
@@ -111,8 +97,10 @@ export default {
     },
   },
   watch: {
-    isUserOpened() {
-      this.makeChart();
+    isUserOpenned(val) {
+      if(!val) this.$nextTick(() => {
+        this.makeChart();
+      });
     },
   },
   methods: {

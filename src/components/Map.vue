@@ -2,16 +2,9 @@
   <div class="map">
     <h3>Карта офиса</h3>
 
-    <div
-      v-if="!isLoading"
-      class="map-root"
-    >
-      <mapSvg ref="svg"/>
-      <Table
-        v-click-outside="handleCloseProfile"
-        v-show="false"
-        ref="table"
-      />
+    <div v-if="!isLoading" class="map-root">
+      <mapSvg ref="svg" />
+      <Table v-click-outside="handleCloseProfile" v-show="false" ref="table" />
     </div>
     <div v-else>Loading...</div>
   </div>
@@ -20,9 +13,9 @@
 <script>
 import _ from "lodash";
 import * as d3 from "d3";
-import ClickOutside from 'vue-click-outside'
-import mapSvg from '@/assets/images/map.svg';
-import Table from '@/assets/images/workPlace.svg';
+import ClickOutside from "vue-click-outside";
+import mapSvg from "@/assets/images/map.svg";
+import Table from "@/assets/images/workPlace.svg";
 import tables from "@/assets/data/tables.json";
 import legend from "@/assets/data/legend.json";
 import people from "@/assets/data/people.json";
@@ -60,11 +53,11 @@ export default {
     }
 
     this.isLoading = false;
-
   },
   methods: {
-    handleCloseProfile() {
-      this.$emit("closeProfile", false);
+    handleCloseProfile(e) {
+      if (!e.target.classList.contains("wrapper-table"))
+        this.$emit("closeProfile");
     },
     drawTables() {
       const svgTablesGroupPlace = this.g
@@ -85,17 +78,22 @@ export default {
           .attr("group_id", table.group_id)
           .classed("table", true)
           .html(this.tableSVG.html())
-          .attr("fill", legend.find((it) => it.group_id === table.group_id) ?.color ?? "transparent");
-
+          .attr(
+            "fill",
+            legend.find((it) => it.group_id === table.group_id)?.color ??
+              "transparent"
+          );
       });
     },
     handleOpenProfile(e) {
-      const _id = _.find(this.people, {"_id": +e.currentTarget.getAttribute("id")});
+      const _id = _.find(this.people, {
+        _id: +e.currentTarget.getAttribute("id"),
+      });
       this.$emit("openProfile", _id);
     },
   },
   directives: {
-    ClickOutside
+    ClickOutside,
   },
 };
 </script>
@@ -119,7 +117,7 @@ export default {
 }
 
 h3 {
-  margin-top: 0px;
+  margin-top: 0;
 }
 
 ::v-deep svg {
