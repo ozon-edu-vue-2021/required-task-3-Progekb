@@ -4,7 +4,7 @@
 
     <div v-if="!isLoading" class="map-root">
       <mapSvg ref="svg" />
-      <Table v-click-outside="handleCloseProfile" v-show="false" ref="table" />
+      <Table v-show="false" ref="table" />
     </div>
     <div v-else>Loading...</div>
   </div>
@@ -13,7 +13,6 @@
 <script>
 import _ from "lodash";
 import * as d3 from "d3";
-import ClickOutside from "vue-click-outside";
 import mapSvg from "@/assets/images/map.svg";
 import Table from "@/assets/images/workPlace.svg";
 import tables from "@/assets/data/tables.json";
@@ -51,7 +50,9 @@ export default {
     } else {
       alert("SVG is incorrect");
     }
-
+    document
+      .querySelector(".map-root")
+      .addEventListener("click", this.handleCloseProfile);
     this.isLoading = false;
   },
   methods: {
@@ -91,9 +92,6 @@ export default {
       });
       this.$emit("openProfile", _id);
     },
-  },
-  directives: {
-    ClickOutside,
   },
 };
 </script>

@@ -8,20 +8,25 @@
     </div>
     <div class="person__info">
       <div class="person__info-name">
-        <b>{{ person.name }} ({{ person.age }})</b>
+        <b>{{ person.name }}</b>
       </div>
-
-      <div class="person__info-email">Почта: {{ person.email }}</div>
-      <div class="person__info-email">
-        Дата регистрации: {{ formatedDate }}
+      <a class="person__info-email" href="mailto:person.email">
+        <emailIcon/>
+      </a>
+      <div class="person__info-age">
+        <b>Возраст:</b> {{ person.age }}
       </div>
-      <div class="person__info-about">О себе: {{ person.about }}</div>
+      <div class="person__info-dtreg">
+        <b>Дата регистрации:</b> {{ formatedDate }}
+      </div>
+      <div class="person__info-about"><b>О себе:</b> {{ person.about }}</div>
     </div>
   </div>
 </template>
 
 <script>
 import { format } from "date-fns";
+import emailIcon from "@/assets/images/email_black_24dp.svg";
 
 export default {
   props: {
@@ -35,20 +40,21 @@ export default {
       return format(new Date(this.person.registered), "dd.MM.yyyy hh:mm");
     },
   },
+  components: {
+    emailIcon
+  },
 };
 </script>
 
 <style scoped>
 .person {
   display: grid;
-  grid-template-columns: 50px 1fr;
-  grid-gap: 8px;
+  grid-template-columns: 100px 1fr;
+  grid-gap: 15px;
 }
 
 .person__photo img {
-  height: 50px;
-  width: 50px;
-  border-radius: 50%;
+  width: 100px;
 }
 
 .person__info {
@@ -58,5 +64,14 @@ export default {
 
 .person__info-name {
   margin-bottom: 10px;
+  font-size: 20px;
+}
+
+.person__info-email {
+  display: flex;
+  background: #ededed;
+  border-radius: 8px;
+  padding: 3px;
+  width: max-content;
 }
 </style>
